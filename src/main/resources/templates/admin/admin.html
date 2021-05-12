@@ -28,8 +28,10 @@
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.surname}"></td>
                     <td th:text="${user.email}"></td>
-<!--                    <td th:text="${user.getRole(user)}"></td>-->
-                    <td> <a th:href ="@{findOne/(id=${user.id})}" class = "btn btn-primary eBtn">Edit</a></td>
+                    <td th:text="${user.getRole(user)}"></td>
+                    <td> <a th:href ="@{findOne/(id=${user.id})}" class = "btn btn-primary eBtn">Edit</a>
+                    <a th:href ="@{admin/user-delete/{id}/(id=${user.id})}" class = "btn btn-danger eBtn">Delete</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
