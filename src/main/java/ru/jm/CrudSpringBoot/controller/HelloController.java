@@ -6,6 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
 
@@ -19,9 +20,15 @@ public class HelloController {
     }
 
     @GetMapping(value = "/admin")
-    public String printUsers(ModelMap model) {
+    public String printUsers(ModelMap model, ModelMap modelRoles) {
         model.addAttribute("users", userService.listUsers());
         return "admin/admin";
+    }
+
+    @GetMapping("/findOne")
+    @ResponseBody
+    public User findOne(Long id) {
+        return userService.findById(id);
     }
 
     @GetMapping("admin/user-create")
@@ -56,7 +63,7 @@ public class HelloController {
     }
 
     @GetMapping("/logout")
-    public String logout(){
+    public String logout() {
         return "logout";
     }
 

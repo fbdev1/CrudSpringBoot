@@ -1,6 +1,9 @@
 package ru.jm.CrudSpringBoot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import ru.jm.CrudSpringBoot.model.User;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,8 +30,10 @@ public class UserController {
 
 
     @RequestMapping(value = "user", method = RequestMethod.GET)
+
     public String printWelcome(ModelMap model, Principal principal) {
-        List<String> messages = new ArrayList<>();
+                List<String> messages = new ArrayList<>();
+
         User user = userDao.getUserByName(principal.getName());
         messages.add("User name: " + user.getName());
         messages.add("User surname: " + user.getSurname());
