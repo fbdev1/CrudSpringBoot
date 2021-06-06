@@ -1,30 +1,63 @@
 /**
  *
  */
+
 $(document).ready(function () {
+
+    $('#myTab a').on('click', function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+    // $('.myFormNewUser #createNewUser');
+    // var href = $(this).attr('href');
+    // var text = $(this).text();
+    // $.get(href, function (user) {
+    //
+    //     $('.myFormNewUser #nameNew').val('123');
+    //     $('.myFormNewUser #surnameNew').val('123');
+    //     $('.myFormNewUser #emailNew').val('123');
+    //     $('.myFormNewUser #passwordNew').val('123');
+    //
+    // });
+
+
+
     $('.nBtn, .table .eBtn').on('click', function (event) {
         event.preventDefault();
+        $('.myForm #editModal').modal();
         var href = $(this).attr('href');
         var text = $(this).text();
-        if(text=='Edit')
-        {
+        var e = document.getElementById('id-field'); //скрывать поле id
+        if (text == 'Edit') {
             $.get(href, function (user) {
+                e.style.display = 'block';
                 $('.myForm #id').val(user.id);
                 $('.myForm #name').val(user.name);
                 $('.myForm #surname').val(user.surname);
                 $('.myForm #email').val(user.email);
-                // $('.myForm #role').val(user.role);
+                $('.myForm #password').val(user.password);
+
+                if (user.roles.length > 1) {
+                    for (let i = 0; i < user.roles.length; i++) {
+                        listOfRoles.options[i].selected = true;
+                    }
+                }else{
+                    listOfRoles.value = user.roles[0].role;
+                }
+
             });
             $('.myForm #exampleModal').modal();
-        }else{
+        } else {
+
+            e.style.display = 'none';
             $('.myForm #id').val('');
             $('.myForm #name').val('');
             $('.myForm #surname').val('');
-            $('.myForm #email').val('');
-            // $('.myForm #role').val(user.role);
+            $('.myForm #email').val('')
+            $('.myForm #password').val('');
             $('.myForm #exampleModal').modal();
         }
-
 
     });
 });

@@ -2,6 +2,7 @@ package ru.jm.CrudSpringBoot.model;
 
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -15,19 +16,24 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+
     @Column(name = "id")
     private Long id;
+
     @Column(name = "role")
     private String role;
 
+    @Transient
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private List<User> users;
 
     public Role() {
     }
-    public Role(String role){
+
+    public Role(String role) {
         this.role = role;
     }
+
 
     public Long getId() {
         return id;

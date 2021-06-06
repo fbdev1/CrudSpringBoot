@@ -28,7 +28,6 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-
     @Column(name = "password")
     private String password;
 
@@ -42,6 +41,7 @@ public class User implements UserDetails {
     public void setRole(Role role) {
         roles.add(role);
     }
+
 
     public String getRole(User user) {
         return user.getRoles().stream()
@@ -110,6 +110,7 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public Set<Role> getRoles() {
         return roles;

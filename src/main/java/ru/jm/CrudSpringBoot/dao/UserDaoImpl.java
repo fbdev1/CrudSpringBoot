@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
-
+@Transactional
 @Repository
 public class UserDaoImpl implements UserDao {
 
@@ -18,24 +18,24 @@ public class UserDaoImpl implements UserDao {
 
     //    private final Map<String, User> userMap = Collections.singletonMap("test",
 //            new User(1L, "test", "test", Collections.singleton(new Role(1L, "ROLE_USER")))); // name - уникальное значение, выступает в качестве ключа Map
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     @Override
     public User getUserByName(String name) {
         return entityManager.createQuery("select u from User u where u.name = :name", User.class).setParameter("name", name).getSingleResult();
     }
 
 
-    @Transactional
+//    @Transactional
     public void add(User user) {
         entityManager.persist(user);
     }
 
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<User> listUsers() {
         return entityManager.createQuery("SELECT u from User u").getResultList();
     }
 
-    @Transactional
+//    @Transactional
     public void remove(Long id) {
 
         Query query = entityManager.createQuery("DELETE FROM User u WHERE u.id = :id").setParameter("id", id);
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-    @Transactional
+//    @Transactional
     public void update(User user, Long id) {
         User newUser = findById(id);
         newUser.setName(user.getName());
@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public User findById(Long id) {
         return entityManager.find(User.class, id);
     }
