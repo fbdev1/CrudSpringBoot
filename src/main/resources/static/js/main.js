@@ -9,20 +9,6 @@ $(document).ready(function () {
         $(this).tab('show')
     })
 
-    // $('.myFormNewUser #createNewUser');
-    // var href = $(this).attr('href');
-    // var text = $(this).text();
-    // $.get(href, function (user) {
-    //
-    //     $('.myFormNewUser #nameNew').val('123');
-    //     $('.myFormNewUser #surnameNew').val('123');
-    //     $('.myFormNewUser #emailNew').val('123');
-    //     $('.myFormNewUser #passwordNew').val('123');
-    //
-    // });
-
-
-
     $('.nBtn, .table .eBtn').on('click', function (event) {
         event.preventDefault();
         $('.myForm #editModal').modal();

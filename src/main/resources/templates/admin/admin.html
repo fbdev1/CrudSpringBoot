@@ -9,79 +9,104 @@
 
 </head>
 <body>
-<div class="container">
 
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-               aria-selected="true">Users table</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-               aria-selected="false">New User</a>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <!--            Вкладка Users table начало-->
-            <div class="card">
-                <div class="card-block">
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="user : ${users}">
-                            <td th:text="${user.id}"></td>
-                            <td th:text="${user.name}"></td>
-                            <td th:text="${user.surname}"></td>
-                            <td th:text="${user.email}"></td>
-                            <td th:text="${user.getRole(user)}"></td>
-                            <td>
-                                <!--                        Кнопка запуска js-->
-                                <a th:href="@{admin/findOne/(id=${user.id})}" class="btn btn-primary eBtn">Edit</a>
-                            </td>
-                            <td>
-                                <a th:href="@{admin/user-delete/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
-                            </td>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <li>
+                <a th:href="@{/admin}" class="btn btn-primary eBtn">Admin</a>
+            </li>
+            <li>
+                <a th:href="@{/user}" class="btn btn-primary eBtn">User</a>
+            </li>
+
         </div>
-        <!--            Вкладка Users table конец-->
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-<!--                        Вкладка New User начало-->
-            <div class="myForm">
-                <form th:action="@{/create}" method="post">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="ModalLabel">New User</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
+        <div class="col-md-10 bg-light">
+            <div>
+                <h1>Admin panel</h1>
+            </div>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home"
+                       aria-selected="true">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                       aria-controls="profile"
+                       aria-selected="false">New User</a>
+                </li>
 
-                                <div class="modal-body">
-                                    <div class="mb-3" id="id-field">
-                                        <label for="id" class="col-form-label">ID</label>
-                                        <input readonly type="number" class="form-control" id="id" name="id" value=""/>
-                                    </div>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <ul class="h3">All users</ul>
+                    <!--            Вкладка Users table начало-->
+                    <div class="card">
+                        <div class="card-block">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Surname</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${users}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.name}"></td>
+                                    <td th:text="${user.surname}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.getRole(user)}"></td>
+                                    <td>
+                                        <!--                        Кнопка запуска js-->
+                                        <a th:href="@{admin/findOne/(id=${user.id})}"
+                                           class="btn btn-primary eBtn">Edit</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{admin/user-delete/{id}(id=${user.id})}"
+                                           class="btn btn-danger">Delete</a>
+                                    </td>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--            Вкладка Users table конец-->
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <ul class="h3">Add new user</ul>
+                    <!--                        Вкладка New User начало-->
+                    <div class="myForm">
+                        <form th:action="@{/create}" method="post">
+                            <div class="modal-content modal-dialog-centered">
+<!--                                <div class="modal-header">-->
+<!--                                    <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+<!--                                            aria-label="Close"></button>-->
+<!--                                </div>-->
+
+                                <div class="modal-body col-md-4">
+<!--                                    <div class="mb-3" id="id-field">-->
+<!--                                        <label for="id" class="col-form-label">ID</label>-->
+<!--                                        <input readonly type="number" class="form-control" id="id" name="id"-->
+<!--                                               value=""/>-->
+<!--                                    </div>-->
                                     <div class="mb-3">
                                         <label for="name" class="col-form-label">Name</label>
                                         <input type="text" class="form-control" id="name" name="name" value=""/>
                                     </div>
                                     <div class="mb-3">
                                         <label for="surname" class="col-form-label">Surname</label>
-                                        <input type="text" class="form-control" id="surname" name="surname" value=""/>
+                                        <input type="text" class="form-control" id="surname" name="surname"
+                                               value=""/>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="col-form-label">Email</label>
@@ -89,30 +114,34 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="col-form-label">Password</label>
-                                        <input type="password" class="form-control" id="password" name="password" value=""/>
+                                        <input type="password" class="form-control" id="password" name="password"
+                                               value=""/>
                                     </div>
                                     <div class="form-group text-center">
                                         <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
-                                            <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
+                                            <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN
+                                            </option>
                                             <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
                                         </select>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Close
                                         </button>
                                         <input type="submit" class="btn btn-primary" value="create"/>
 
                                     </div>
 
-                        </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                    <!--            Вкладка New User конец-->
+                </div>
             </div>
-            <!--            Вкладка New User конец-->
+
         </div>
-
     </div>
-
 
     <!--   Модалка НАЧАЛО JS-->
 
@@ -125,7 +154,8 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Update user</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                         </div>
 
                         <div class="modal-body">
