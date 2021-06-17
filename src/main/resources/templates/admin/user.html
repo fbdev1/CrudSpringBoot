@@ -1,107 +1,107 @@
 <!DOCTYPE html>
 <html lang="en" meta charset="UTF-8" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
-  <title>Admin panel</title>
-  <script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
-  <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
+    <title>Admin panel</title>
+    <script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
 
 </head>
 <body>
 
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-      <a th:href="@{/admin}" class="btn btn-primary eBtn">Admin</a>
-    </div>
-    <div class="col-md-10  bg-light">
-      <tr class="table-light">
-        <h1>User information-page</h1>
-      </tr>
-      <tr class="table-dark">
-       <h3>About users</h3>
-      </tr>
-
-          <!--            Вкладка Users table начало-->
-          <div class="card">
-            <div class="card-block">
-              <table class="table table-hover">
-                <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Surname</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:object="${user}">
-                  <td th:text="${user.id}"></td>
-                  <td th:text="${user.name}"></td>
-                  <td th:text="${user.surname}"></td>
-                  <td th:text="${user.email}"></td>
-                  <td th:text="${user.getRole(user)}"></td>
-
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-        <!--            Вкладка Users table конец-->
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <!--                        Вкладка New User начало-->
-          <div class="myForm">
-            <form th:action="@{/create}" method="post">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="ModalLabel">New User</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                          aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                  <div class="mb-3" id="id-field">
-                    <label for="id" class="col-form-label">ID</label>
-                    <input readonly type="number" class="form-control" id="id" name="id" value=""/>
-                  </div>
-                  <div class="mb-3">
-                    <label for="name" class="col-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value=""/>
-                  </div>
-                  <div class="mb-3">
-                    <label for="surname" class="col-form-label">Surname</label>
-                    <input type="text" class="form-control" id="surname" name="surname" value=""/>
-                  </div>
-                  <div class="mb-3">
-                    <label for="email" class="col-form-label">Email</label>
-                    <input type="text" class="form-control" id="email" name="email" value=""/>
-                  </div>
-                  <div class="mb-3">
-                    <label for="password" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           value=""/>
-                  </div>
-                  <div class="form-group text-center">
-                    <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
-                      <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
-                      <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
-                    </select>
-                  </div>
-
-
-                </div>
-              </div>
-            </form>
-          </div>
-          <!--            Вкладка New User конец-->
+    <div class="row">
+        <div class="col-md-2 p-0">
+            <a th:href="@{/admin}" class="btn btn-outline-primary eBtn btn-block" aria-pressed="true">Admin</a>
         </div>
+        <div class="col-md-10  bg-light">
+            <tr class="table-light">
+                <h1>User information-page</h1>
+            </tr>
+            <tr class="table-dark">
+                <h3>About users</h3>
+            </tr>
 
+            <!--            Вкладка Users table начало-->
+            <div class="card">
+                <div class="card-block">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:object="${user}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.surname}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.getRole(user)}"></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--            Вкладка Users table конец-->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <!--                        Вкладка New User начало-->
+                <div class="myForm">
+                    <form th:action="@{/create}" method="post">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabel">New User</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="mb-3" id="id-field">
+                                    <label for="id" class="col-form-label">ID</label>
+                                    <input readonly type="number" class="form-control" id="id" name="id" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name" class="col-form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="surname" class="col-form-label">Surname</label>
+                                    <input type="text" class="form-control" id="surname" name="surname" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="col-form-label">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="col-form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           value=""/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
+                                        <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
+                                        <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--            Вкладка New User конец-->
+            </div>
+
+        </div>
     </div>
-  </div>
 
-
+</div>
 </body>
 </html>

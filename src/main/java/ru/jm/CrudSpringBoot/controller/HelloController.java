@@ -9,6 +9,7 @@ import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 public class HelloController {
@@ -20,7 +21,9 @@ public class HelloController {
     }
 
     @GetMapping(value = "/admin")
-    public String printUsers(ModelMap model) {
+    public String printUsers(ModelMap model, Principal principal) {
+        User activeUser = userDao.getUserByName(principal.getName());
+        model.addAttribute("activeUser", activeUser);
         model.addAttribute("users", userDao.listUsers());
         return "admin/admin";
     }
@@ -29,7 +32,7 @@ public class HelloController {
     @ResponseBody
     public User findOne(ModelMap model, Long id) {
         User user = userDao.findById(id);
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return user;
 
     }
@@ -47,17 +50,13 @@ public class HelloController {
     }
 
 
-
-
-
-
     @GetMapping("admin/user-create")
     public String createUserForm(User user) {
         return "admin/user-create";
     }
 
     @PostMapping("admin/user-create")
-        public String createUser(User user) {
+    public String createUser(User user) {
         userDao.add(user);
         return "redirect:/admin";
     }

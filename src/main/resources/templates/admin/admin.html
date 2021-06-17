@@ -9,17 +9,21 @@
 
 </head>
 <body>
+<div class="container-fluid">
+    <div class="row text-light bg-dark">
+        <p class="col-auto"> <span class="font-weight-bold" th:text="${activeUser.email}"></span>
+            <span> with roles: </span>
+            <span class="font-weight-bold" th:text="${activeUser.getRole(activeUser)}"></span>
+            <span class="float-right">logout</span>
 
+        </p>
+    </div>
+</div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2">
-            <li>
-                <a th:href="@{/admin}" class="btn btn-primary eBtn">Admin</a>
-            </li>
-            <li>
-                <a th:href="@{/user}" class="btn btn-primary eBtn">User</a>
-            </li>
-
+        <div class="col-md-2 p-0">
+                <a th:href="@{/admin}" class="btn btn-outline-primary eBtn btn-block border-0" aria-pressed="true">Admin</a>
+                <a th:href="@{/user}" class="btn btn-outline-primary eBtn btn-block border-0" aria-pressed="true">User</a>
         </div>
         <div class="col-md-10 bg-light">
             <div>
@@ -88,47 +92,38 @@
                     <div class="myForm">
                         <form th:action="@{/create}" method="post">
                             <div class="modal-content modal-dialog-centered">
-<!--                                <div class="modal-header">-->
-<!--                                    <button type="button" class="btn-close" data-bs-dismiss="modal"-->
-<!--                                            aria-label="Close"></button>-->
-<!--                                </div>-->
+
 
                                 <div class="modal-body col-md-4">
-<!--                                    <div class="mb-3" id="id-field">-->
-<!--                                        <label for="id" class="col-form-label">ID</label>-->
-<!--                                        <input readonly type="number" class="form-control" id="id" name="id"-->
-<!--                                               value=""/>-->
-<!--                                    </div>-->
                                     <div class="mb-3">
-                                        <label for="name" class="col-form-label">Name</label>
+                                        <label for="name" class="d-flex justify-content-center">Name</label>
                                         <input type="text" class="form-control" id="name" name="name" value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="surname" class="col-form-label">Surname</label>
+                                        <label for="surname" class="d-flex justify-content-center">Surname</label>
                                         <input type="text" class="form-control" id="surname" name="surname"
                                                value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="email" class="col-form-label">Email</label>
+                                        <label for="email" class="d-flex justify-content-center">Email</label>
                                         <input type="text" class="form-control" id="email" name="email" value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="password" class="col-form-label">Password</label>
+                                        <label for="password" class="d-flex justify-content-center">Password</label>
                                         <input type="password" class="form-control" id="password" name="password"
                                                value=""/>
                                     </div>
                                     <div class="form-group text-center">
+                                        <label for="listOfRoles" class="d-flex justify-content-center">Roles</label>
                                         <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
                                             <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN
                                             </option>
                                             <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
                                         </select>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                            Close
-                                        </button>
-                                        <input type="submit" class="btn btn-primary" value="create"/>
+                                    <div class="modal-footer d-flex justify-content-center">
+
+                                        <input type="submit" class="btn btn-success" value="Add new user"/>
 
                                     </div>
 
