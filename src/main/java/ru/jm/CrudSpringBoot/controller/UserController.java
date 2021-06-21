@@ -27,15 +27,12 @@ public class UserController {
     @RequestMapping(value = "user", method = RequestMethod.GET)
 
     public String printWelcome(ModelMap model, Principal principal) {
-                List<String> messages = new ArrayList<>();
-
-        User user = userDao.getUserByName(principal.getName());
+       User user = userDao.getUserByName(principal.getName());
 //        messages.add("User name: " + user.getName());
 //        messages.add("User surname: " + user.getSurname());
 //        messages.add("User email: " + user.getEmail());
 //        messages.add("User role: "+ user.getRoles().stream().
 //                map(r->r.getRole()).collect(Collectors.toList()));
-
         model.addAttribute("user", user);
         return "admin/user";
     }

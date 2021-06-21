@@ -34,12 +34,16 @@ public class HelloController {
         User user = userDao.findById(id);
         model.addAttribute("user", user);
         return user;
-
     }
 
     @PostMapping("/update")
     public String update(User user) {
         userDao.update(user, user.getId());
+        return "redirect:/admin";
+    }
+    @PostMapping("/delete")
+    public String delete(User user) {
+        userDao.remove(user.getId());
         return "redirect:/admin";
     }
 

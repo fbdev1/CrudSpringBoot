@@ -9,41 +9,43 @@ $(document).ready(function () {
         $(this).tab('show')
     })
 
-    $('.nBtn, .table .eBtn').on('click', function (event) {
-        event.preventDefault();
-        $('.myForm #editModal').modal();
+    $('.dBtn').on('click', function (ev) {
+        ev.preventDefault();
         var href = $(this).attr('href');
-        var text = $(this).text();
-        var e = document.getElementById('id-field'); //скрывать поле id
-        if (text == 'Edit') {
-            $.get(href, function (user) {
-                e.style.display = 'block';
-                $('.myForm #id').val(user.id);
-                $('.myForm #name').val(user.name);
-                $('.myForm #surname').val(user.surname);
-                $('.myForm #email').val(user.email);
-                $('.myForm #password').val(user.password);
+        $.get(href, function (user) {
+            $('.deleteForm #deleteId').val(user.id);
+            $('.deleteForm #deleteName').val(user.name);
+            $('.deleteForm #deleteSurname').val(user.surname);
+            $('.deleteForm #deleteEmail').val(user.email);
+            $('.deleteForm #deletePassword').val(user.password);
+        })
+        $('.deleteForm #deleteModal').modal();
+    })
 
-                if (user.roles.length > 1) {
-                    for (let i = 0; i < user.roles.length; i++) {
-                        listOfRoles.options[i].selected = true;
-                    }
-                }else{
-                    listOfRoles.value = user.roles[0].role;
-                }
 
-            });
-            $('.myForm #exampleModal').modal();
-        } else {
+    $('.eBtn').on('click', function (event) {
+        event.preventDefault();
+        var href = $(this).attr('href');
+        // var text = $(this).text();
+        // var e = document.getElementById('id-field'); //скрывать поле id
+        // if (text === 'Edit') {
+        $.get(href, function (user) {
+            // e.style.display = 'block';
+            $('.editForm #id').val(user.id);
+            $('.editForm #name').val(user.name);
+            $('.editForm #surname').val(user.surname);
+            $('.editForm #email').val(user.email);
+            $('.editForm #password').val(user.password);
 
-            e.style.display = 'none';
-            $('.myForm #id').val('');
-            $('.myForm #name').val('');
-            $('.myForm #surname').val('');
-            $('.myForm #email').val('')
-            $('.myForm #password').val('');
-            $('.myForm #exampleModal').modal();
-        }
+            // if (user.roles.length > 1) {
+            //     for (let i = 0; i < user.roles.length; i++) {
+            //         listOfRoles.options[i].selected = true;
+            //     }
+            // } else {
+            //     listOfRoles.value = user.roles[0].role;
+            // }
 
-    });
-});
+        })
+        $('.editForm #editModal').modal();
+    })
+})
