@@ -4,10 +4,13 @@
 
 $(document).ready(function () {
 
+
+
     $('#myTab a').on('click', function (e) {
         e.preventDefault()
         $(this).tab('show')
     })
+
 
     $('.dBtn').on('click', function (ev) {
         ev.preventDefault();

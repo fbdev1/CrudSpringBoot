@@ -25,8 +25,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 p-0">
-            <a th:href="@{/admin}" class="btn btn-outline-primary btn-block border-0">Admin</a>
-            <a th:href="@{/user}" class="btn btn-primary btn-block border-0">User</a>
+            <div th:switch="${user.getRole(user)}">
+                <a th:case="'ADMIN, USER'" th:href="@{/admin}"
+                   class="btn btn-outline-primary btn-block border-0">Admin</a>
+                <a th:case="'ADMIN'" th:href="@{/admin}" class="btn btn-outline-primary btn-block border-0">Admin</a>
+                <a th:href="@{/user}" class="btn btn-primary btn-block">User</a>
+            </div>
         </div>
         <div class="col-md-10  bg-light">
 

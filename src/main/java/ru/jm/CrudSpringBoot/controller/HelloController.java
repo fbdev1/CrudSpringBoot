@@ -7,8 +7,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
-
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
@@ -18,6 +16,11 @@ public class HelloController {
     @Autowired
     public HelloController(UserDao userService) {
         this.userDao = userService;
+    }
+
+    @GetMapping(value = "/")
+    public String logonPage() {
+        return "redirect:/login";
     }
 
     @GetMapping(value = "/admin")

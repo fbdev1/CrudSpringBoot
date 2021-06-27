@@ -25,7 +25,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 p-0">
-            <!--            <a th:href="@{/admin}" class="btn btn-outline-primary eBtn btn-block border-0">Admin</a>-->
             <a th:href="@{/admin}" class="btn btn-primary btn-block">Admin</a>
             <a th:href="@{/user}" class="btn btn-outline-primary btn-block border-0">User</a>
         </div>
@@ -98,26 +97,26 @@
                             <div class="modal-content modal-dialog-centered">
                                 <div class="modal-body col-md-4">
                                     <div class="mb-3">
-                                        <label for="name" class="d-flex justify-content-center">Name</label>
+                                        <label for="name" class="d-flex justify-content-center font-weight-bold">Name</label>
                                         <input type="text" class="form-control" id="newUsername" name="name" value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="surname" class="d-flex justify-content-center">Surname</label>
+                                        <label for="surname" class="d-flex justify-content-center font-weight-bold">Surname</label>
                                         <input type="text" class="form-control" id="newUserSurname" name="surname"
                                                value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="email" class="d-flex justify-content-center">Email</label>
+                                        <label for="email" class="d-flex justify-content-center font-weight-bold">Email</label>
                                         <input type="text" class="form-control" id="newUserEmail" name="email"
                                                value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="password" class="d-flex justify-content-center">Password</label>
+                                        <label for="password" class="d-flex justify-content-center font-weight-bold">Password</label>
                                         <input type="password" class="form-control" id="newUserPassword" name="password"
                                                value=""/>
                                     </div>
                                     <div class="form-group text-center">
-                                        <label for="listOfRoles" class="d-flex justify-content-center">Roles</label>
+                                        <label for="listOfRoles" class="d-flex justify-content-center font-weight-bold">Role</label>
                                         <select id="newUserListOfRoles" class="form-select col-lg" multiple
                                                 name="roles[]">
                                             <option id="newUserRoleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN
@@ -149,42 +148,55 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Update user</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="mb-3" id="id-field">
-                                <label for="id" class="col-form-label">ID</label>
-                                <input readonly type="number" class="form-control" id="id" name="id" value=""/>
+
+                        <div class="modal-body row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="mb-3" id="id-field">
+                                    <label for="id"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
+                                    <input readonly type="number" class="form-control" id="id" name="id" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="name"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="surname"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">Surname</label>
+                                    <input type="text" class="form-control" id="surname" name="surname" value=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">Email</label>
+                                    <input type="text" class="form-control" id="email" name="email" value=""/>
+                                </div>
+                                <div class="mb-3" id="password-field">
+                                    <label for="password"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" value=""/>
+                                </div>
+
+
+                                <div class="form-group text-center">
+                                    <label for="listOfRoles"
+                                           class="col-form-label font-weight-bold d-flex justify-content-center">Role</label>
+                                    <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
+                                        <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
+                                        <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="name" class="col-form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" value=""/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="surname" class="col-form-label">Surname</label>
-                                <input type="text" class="form-control" id="surname" name="surname" value=""/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="col-form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" value=""/>
-                            </div>
-                            <div class="mb-3" id="password-field">
-                                <label for="password" class="col-form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" value=""/>
-                            </div>
-                            <div class="form-group text-center">
-                                <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
-                                    <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
-                                    <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
-                                </select>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
-                                </button>
-                                <input type="submit" class="btn btn-primary" value="update"/>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    aria-label="Close">CLose
+                            </button>
+                            <input type="submit" class="btn btn-primary" value="Edit"/>
                         </div>
                     </div>
                 </div>
@@ -207,6 +219,7 @@
 
                         <div class="modal-body row justify-content-center">
                             <div class="col-md-6">
+
                                 <div class="mb-3" id="delete-id-field">
                                     <label for="deleteId"
                                            class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
@@ -246,7 +259,9 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">CLose</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                CLose
+                            </button>
                             <!--<a th:href="@{admin/user-delete/{id}(id=${user.id})}" class="btn btn-danger dBtn">Delete</a>-->
                             <input type="submit" class="btn btn-danger" value="delete"/>
                         </div>
@@ -257,45 +272,5 @@
     </div>
     <!--   Модальное окно удаление конец-->
 </div>
-<!--<div th:switch="${users}">-->
-<!--    <h2 th:case="null">No users found!</h2>-->
-<!--    <div th:case="*">-->
-<!--        <h2>Users</h2>-->
-<!--        <table border="1">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <th>Id</th>-->
-<!--                <th>Name</th>-->
-<!--                <th>SurName</th>-->
-<!--                <th>email</th>-->
-<!--                <th>password</th>-->
-<!--            </tr>-->
-<!--            </thead>-->
-<!--            <tr th:each="user : ${users}">-->
-<!--                <td th:utext="${user.id}"></td>-->
-<!--                <td th:utext="${user.name}"></td>-->
-<!--                <td th:utext="${user.surname}"></td>-->
-<!--                <td th:utext="${user.email}"></td>-->
-<!--                <td th:utext="${user.password}"></td>-->
-<!--                <td><a th:href="@{admin/user-update/{id}(id=${user.id})}">Edit</a></td>-->
-<!--                <td><a th:href="@{admin/user-delete/{id}(id=${user.id})}">Delete</a></td>-->
-<!--            </tr>-->
-
-<!--        </table>-->
-
-
-<!--    </div>-->
-
-
-<!--    &lt;!&ndash;    <p><a href="admin/user-create">User create</a></p>&ndash;&gt;-->
-<!--    </br>-->
-<!--    <form th:action="@{admin/user-create}" method="GET">-->
-<!--        <input type="submit" value="Create user">-->
-<!--    </form>-->
-<!--    </br>-->
-<!--    <form th:action="@{/logout}" method="POST">-->
-<!--        <input type="submit" value="logout"/>-->
-<!--    </form>-->
-<!--</div>-->
 </body>
 </html>

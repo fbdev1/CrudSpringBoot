@@ -3,9 +3,9 @@ package ru.jm.CrudSpringBoot.model;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,7 +16,7 @@ public class User implements UserDetails {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", unique = true, length = 20, nullable = false)
@@ -25,7 +25,7 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String surname;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "password")
@@ -58,7 +58,6 @@ public class User implements UserDetails {
     }
 
     public User() {
-
     }
 
     @Override
@@ -140,5 +139,17 @@ public class User implements UserDetails {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && email.equals(user.email) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, email, password, roles);
+    }
 
 }
