@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
 
+
 </head>
 <body>
 <div class="container-fluid">
     <div class="row text-light bg-dark">
-        <p class="col mt-2 mb-2"><span class="font-weight-bold" th:text="${activeUser.email}"></span>
-            <span> with roles: </span>
-            <span class="font-weight-bold" th:text="${activeUser.getRole(activeUser)}"></span>
-        </p>
+        <p class="col mt-2 mb-2"><span class="font-weight-bold" id="header"/>
+
         <p class="col text-light mt-2 mb-2">
             <a class="float-right text-light" th:href="@{/logout}" method="POST">
                 logout
@@ -24,11 +23,15 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2 p-0">
-            <a th:href="@{/admin}" class="btn btn-primary btn-block">Admin</a>
-            <a th:href="@{/user}" class="btn btn-outline-primary btn-block border-0">User</a>
+        <div class="col-md-2 pl-0 pr-0">
+            <nav class="nav flex-column nav-pills">
+                <a onclick="adminPage()" data-toggle="pill" class="nav-link active d-flex justify-content-center"
+                   id="aBtn">Admin</a>
+                <a onclick="userPage()" data-toggle="pill" class="nav-link d-flex justify-content-center"
+                   id="uBtn">User</a>
+            </nav>
         </div>
-        <div class="col-md-10 bg-light">
+        <div class="col-md-10 bg-light" id="adminContainer">
             <div>
                 <h1>Admin panel</h1>
             </div>
@@ -64,25 +67,7 @@
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr th:each="user : ${users}">
-                                    <td th:text="${user.id}"></td>
-                                    <td th:text="${user.name}"></td>
-                                    <td th:text="${user.surname}"></td>
-                                    <td th:text="${user.email}"></td>
-                                    <td th:text="${user.getRole(user)}"></td>
-                                    <td>
-                                        <!--                        Кнопка запуска js-->
-                                        <a th:href="@{admin/findOne/(id=${user.id})}"
-                                           class="btn btn-primary eBtn">Edit</a>
-                                    </td>
-                                    <td>
-                                        <a th:href="@{admin/findOne/(id=${user.id})}"
-                                           class="btn btn-danger dBtn">Delete</a>
-
-                                    </td>
-                                    </td>
-                                </tr>
+                                <tbody id="tableAll">
                                 </tbody>
                             </table>
                         </div>
@@ -93,30 +78,35 @@
                     <ul class="h3">Add new user</ul>
                     <!--     Вкладка New User начало-->
                     <div class="myForm">
-                        <form th:action="@{/create}" method="post">
+                        <form id="newUserForm">
                             <div class="modal-content modal-dialog-centered">
                                 <div class="modal-body col-md-4">
                                     <div class="mb-3">
-                                        <label for="name" class="d-flex justify-content-center font-weight-bold">Name</label>
+                                        <label for="newUsername"
+                                               class="d-flex justify-content-center font-weight-bold">Name</label>
                                         <input type="text" class="form-control" id="newUsername" name="name" value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="surname" class="d-flex justify-content-center font-weight-bold">Surname</label>
+                                        <label for="newUserSurname"
+                                               class="d-flex justify-content-center font-weight-bold">Surname</label>
                                         <input type="text" class="form-control" id="newUserSurname" name="surname"
                                                value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="email" class="d-flex justify-content-center font-weight-bold">Email</label>
+                                        <label for="newUserEmail"
+                                               class="d-flex justify-content-center font-weight-bold">Email</label>
                                         <input type="text" class="form-control" id="newUserEmail" name="email"
                                                value=""/>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="password" class="d-flex justify-content-center font-weight-bold">Password</label>
+                                        <label for="newUserPassword"
+                                               class="d-flex justify-content-center font-weight-bold">Password</label>
                                         <input type="password" class="form-control" id="newUserPassword" name="password"
                                                value=""/>
                                     </div>
                                     <div class="form-group text-center">
-                                        <label for="listOfRoles" class="d-flex justify-content-center font-weight-bold">Role</label>
+                                        <label for="newUserListOfRoles"
+                                               class="d-flex justify-content-center font-weight-bold">Role</label>
                                         <select id="newUserListOfRoles" class="form-select col-lg" multiple
                                                 name="roles[]">
                                             <option id="newUserRoleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN
@@ -125,150 +115,181 @@
                                         </select>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-center">
-
-                                        <input type="submit" class="btn btn-success" value="Add new user"/>
-
+                                        <input type="submit" id="newUserBtn" class="btn btn-success"
+                                               value="Add new user"/>
                                     </div>
 
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <!--     Вкладка New User конец-->
                 </div>
             </div>
+        </div>
+        <div class="col-md-10  bg-light" id="userContainer" style="display: none">
+            <h1>User information-page</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>
+                        <h5>About users</h5>
+                    </td>
+                </tr>
+                </thead>
+
+                <!--            Вкладка Users table начало-->
+                <tbody class="bg-white">
+                <tr>
+                    <td>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Surname</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="current-id"></td>
+                                <td id="current-name"></td>
+                                <td id="current-lastname"></td>
+                                <td id="current-email"></td>
+                                <td id="current-role"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <!--   Модалка редактирование начало-->
-    <div class="editForm">
-        <form th:action="@{/update}" method="post">
-            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        </div>
+    <div class="editForm" id="editForm">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="mb-3" id="id-field">
+                                <label for="editModalId"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
+                                <input readonly type="number" class="form-control" id="editModalId" name="id" value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editModalName"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Name</label>
+                                <input type="text" class="form-control" id="editModalName" name="name" value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editModalSurname"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Surname</label>
+                                <input type="text" class="form-control" id="editModalSurname" name="surname" value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editModalEmail"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Email</label>
+                                <input type="text" class="form-control" id="editModalEmail" name="email" value=""/>
+                            </div>
+                            <div class="mb-3" id="password-field">
+                                <label for="editModalPassword"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Password</label>
+                                <input type="password" class="form-control" id="editModalPassword" name="password"
+                                       value=""/>
+                            </div>
 
-                        <div class="modal-body row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="mb-3" id="id-field">
-                                    <label for="id"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
-                                    <input readonly type="number" class="form-control" id="id" name="id" value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="name"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="surname"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Surname</label>
-                                    <input type="text" class="form-control" id="surname" name="surname" value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Email</label>
-                                    <input type="text" class="form-control" id="email" name="email" value=""/>
-                                </div>
-                                <div class="mb-3" id="password-field">
-                                    <label for="password"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" value=""/>
-                                </div>
 
-
-                                <div class="form-group text-center">
-                                    <label for="listOfRoles"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Role</label>
-                                    <select id="listOfRoles" class="form-select col-lg" multiple name="roles[]">
-                                        <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
-                                        <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
-                                    </select>
-                                </div>
+                            <div class="form-group text-center">
+                                <label for="editModalListOfRoles"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Role</label>
+                                <select id="editModalListOfRoles" class="form-select col-lg" multiple name="roles[]">
+                                    <option id="roleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
+                                    <option id="roleUser" name="roleUser" value="ROLE_USER">USER</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                    aria-label="Close">CLose
-                            </button>
-                            <input type="submit" class="btn btn-primary" value="Edit"/>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                aria-label="Close">CLose
+                        </button>
+                        <input type="submit" onclick="edBtn()" class="btn btn-primary" value="Edit"/>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
     <!--   Модалка редактирование конец-->
     <!--   Модальное окно удаление начало-->
-    <div class="deleteForm">
-        <form th:action="@{/delete}" method="post">
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                    aria-hidden="true">&times;</span></button>
-                        </div>
+    <div class="deleteForm" id="deleteForm">
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Delete user</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body row justify-content-center">
+                        <div class="col-md-6">
 
-                        <div class="modal-body row justify-content-center">
-                            <div class="col-md-6">
+                            <div class="mb-3" id="delete-id-field">
+                                <label for="deleteId"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
+                                <input readonly type="number" class="form-control" id="deleteId" name="id"
+                                       value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deleteName"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Name</label>
+                                <input readonly type="text" class="form-control" id="deleteName" name="deleteName"
+                                       value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deleteSurname"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Surname</label>
+                                <input readonly type="text" class="form-control" id="deleteSurname"
+                                       name="deleteSurname"
+                                       value=""/>
+                            </div>
+                            <div class="mb-3">
+                                <label for="deleteEmail"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Email</label>
+                                <input readonly type="text" class="form-control" id="deleteEmail" name="deleteEmail"
+                                       value=""/>
+                            </div>
 
-                                <div class="mb-3" id="delete-id-field">
-                                    <label for="deleteId"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">ID</label>
-                                    <input readonly type="number" class="form-control" id="deleteId" name="id"
-                                           value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="deleteName"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Name</label>
-                                    <input readonly type="text" class="form-control" id="deleteName" name="deleteName"
-                                           value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="deleteSurname"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Surname</label>
-                                    <input readonly type="text" class="form-control" id="deleteSurname"
-                                           name="deleteSurname"
-                                           value=""/>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="deleteEmail"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Email</label>
-                                    <input readonly type="text" class="form-control" id="deleteEmail" name="deleteEmail"
-                                           value=""/>
-                                </div>
-
-                                <div class="form-group text-center">
-                                    <label for="deleteListOfRoles"
-                                           class="col-form-label font-weight-bold d-flex justify-content-center">Role</label>
-                                    <select readonly id="deleteListOfRoles" class="form-select col-lg" multiple
-                                            name="roles[]" disabled>
-                                        <option id="deleteRoleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
-                                        <option id="deleteRoleUser" name="roleUser" value="ROLE_USER">USER</option>
-                                    </select>
-                                </div>
-
+                            <div class="form-group text-center">
+                                <label for="deleteListOfRoles"
+                                       class="col-form-label font-weight-bold d-flex justify-content-center">Role</label>
+                                <select readonly id="deleteListOfRoles" class="form-select col-lg" multiple
+                                        name="roles[]" disabled>
+                                    <option id="deleteRoleAdmin" name="roleAdmin" value="ROLE_ADMIN">ADMIN</option>
+                                    <option id="deleteRoleUser" name="roleUser" value="ROLE_USER">USER</option>
+                                </select>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
-                                CLose
-                            </button>
-                            <!--<a th:href="@{admin/user-delete/{id}(id=${user.id})}" class="btn btn-danger dBtn">Delete</a>-->
-                            <input type="submit" class="btn btn-danger" value="delete"/>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                            CLose
+                        </button>
+                        <input type="submit" onclick="delBtn()" class="btn btn-danger" id="dUBtn" value="delete"/>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
     <!--   Модальное окно удаление конец-->
 </div>

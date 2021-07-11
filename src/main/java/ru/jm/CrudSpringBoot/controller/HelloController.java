@@ -1,15 +1,16 @@
 package ru.jm.CrudSpringBoot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
-import java.security.Principal;
 
-@Controller
+import java.security.Principal;
+import java.util.List;
+
+@RestController
 public class HelloController {
     private final UserDao userDao;
 
@@ -18,86 +19,50 @@ public class HelloController {
         this.userDao = userService;
     }
 
-    @GetMapping(value = "/")
-    public String logonPage() {
-        return "redirect:/login";
-    }
-
-    @GetMapping(value = "/admin")
-    public String printUsers(ModelMap model, Principal principal) {
-        User activeUser = userDao.getUserByName(principal.getName());
-        model.addAttribute("activeUser", activeUser);
-        model.addAttribute("users", userDao.listUsers());
-        return "admin/admin";
-    }
-
-    @GetMapping("admin/findOne")
-    @ResponseBody
-    public User findOne(ModelMap model, Long id) {
-        User user = userDao.findById(id);
-        model.addAttribute("user", user);
+    @GetMapping("/users")
+    public User printWelcome(Principal principal) {
+        User user = userDao.getUserByName(principal.getName());
+        user.setStringRoles(user.getRole());
         return user;
     }
 
-    @PostMapping("/update")
-    public String update(User user) {
-        userDao.update(user, user.getId());
-        return "redirect:/admin";
+    @GetMapping(value = "/adminAll")
+    public List<User> printUsers() {
+        List<User> newList = userDao.listUsers();
+        for (User u : newList) {
+            u.setStringRoles(u.getRole());
+        }
+        return newList;
     }
-    @PostMapping("/delete")
-    public String delete(User user) {
-        userDao.remove(user.getId());
-        return "redirect:/admin";
+
+    @GetMapping("/findOne/{id}")
+    public User findOne(@PathVariable("id") Long id) {
+        User user = userDao.findById(id);
+        return user;
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<User> update(@RequestBody User user) {
+        try {
+        userDao.update(user, user.getId());
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable("id") Long id){
+        userDao.remove(id);
     }
 
     @PostMapping("/create")
-    public String create(User user) {
-        userDao.add(user);
-        return "redirect:/admin";
-    }
-
-
-    @GetMapping("admin/user-create")
-    public String createUserForm(User user) {
-        return "admin/user-create";
-    }
-
-    @PostMapping("admin/user-create")
-    public String createUser(User user) {
-        userDao.add(user);
-        return "redirect:/admin";
-    }
-
-
-    @GetMapping("admin/user-delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        userDao.remove(id);
-        return "redirect:/admin";
-    }
-
-
-    @GetMapping("admin/user-update/{id}")
-    public String updateUserForm(@PathVariable("id") Long id, ModelMap model) {
-        User user = userDao.findById(id);
-        model.addAttribute("user", user);
-        return "admin/user-update";
-    }
-
-    @PostMapping("/user-update/{id}")
-    public String updateUser(@PathVariable("id") Long id, User user) {
-        userDao.update(user, id);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "logout";
-    }
-
-    // Login form with error
-    @RequestMapping("/login-error.html")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login";
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        try {
+            userDao.add(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

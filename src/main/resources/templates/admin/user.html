@@ -5,7 +5,8 @@
     <script type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
-    <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
+
+
 
 </head>
 <body>
@@ -13,7 +14,7 @@
     <div class="row text-light bg-dark">
         <p class="col mt-2 mb-2"><span class="font-weight-bold" th:text="${user.email}"></span>
             <span> with roles: </span>
-            <span class="font-weight-bold" th:text="${user.getRole(user)}"></span>
+            <span class="font-weight-bold" th:text="${user.getRole()}"></span>
         </p>
         <p class="col text-light mt-2 mb-2">
             <a class="float-right text-light" th:href="@{/logout}" method="POST">
@@ -25,7 +26,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 p-0">
-            <div th:switch="${user.getRole(user)}">
+            <div th:switch="${user.getRole()}">
                 <a th:case="'ADMIN, USER'" th:href="@{/admin}"
                    class="btn btn-outline-primary btn-block border-0">Admin</a>
                 <a th:case="'ADMIN'" th:href="@{/admin}" class="btn btn-outline-primary btn-block border-0">Admin</a>
@@ -47,8 +48,6 @@
                 </thead>
 
                 <!--            Вкладка Users table начало-->
-                <!--            <div class="card">-->
-                <!--                <div class="card-block">-->
                 <tbody class="bg-white">
                 <tr>
                     <td>
@@ -68,7 +67,7 @@
                                 <td th:text="${user.name}"></td>
                                 <td th:text="${user.surname}"></td>
                                 <td th:text="${user.email}"></td>
-                                <td th:text="${user.getRole(user)}"></td>
+                                <td th:text="${user.getRole()}"></td>
 
                             </tr>
                             </tbody>

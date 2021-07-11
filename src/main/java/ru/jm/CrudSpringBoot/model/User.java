@@ -3,6 +3,7 @@ package ru.jm.CrudSpringBoot.model;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Objects;
@@ -38,13 +39,20 @@ public class User implements UserDetails {
     )
     private Set<Role> roles;
 
+
     public void setRole(Role role) {
         roles.add(role);
     }
 
+       @Transient
+    private String stringRoles;
 
-    public String getRole(User user) {
-        return user.getRoles().stream()
+    public void setStringRoles(String stringRoles) {
+        this.stringRoles = stringRoles;
+    }
+
+    public String getRole() {
+        return getRoles().stream()
                 .map(r -> r.getRole().substring(r.getRole().indexOf('_') + 1))
                 .collect(Collectors.joining(", "));
     }

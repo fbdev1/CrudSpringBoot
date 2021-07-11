@@ -22,9 +22,9 @@ public class Role implements GrantedAuthority {
     @Column(name = "role")
     private String role;
 
-    @Transient
+//    @Transient
 //    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
-    private List<User> users;
+//    private List<User> users;
 
     public Role() {}
 
@@ -49,29 +49,29 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
+//    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 
     @Override
     public String getAuthority() {
         return getRole();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role1 = (Role) o;
-        return id.equals(role1.id) && Objects.equals(role, role1.role) && users.equals(role1.users);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, role, users);
-    }
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Role role1 = (Role) o;
+//        return id.equals(role1.id) && Objects.equals(role, role1.role) && users.equals(role1.users);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id, role, users);
+//    }
 }
