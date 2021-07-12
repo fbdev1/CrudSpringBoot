@@ -4,31 +4,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
+import ru.jm.CrudSpringBoot.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 public class HelloController {
-    private final UserDao userDao;
+    private final UserService userService;
 
     @Autowired
-    public HelloController(UserDao userService) {
-        this.userDao = userService;
+    public HelloController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/users")
-    public User printWelcome(Principal principal) {
-        User user = userDao.getUserByName(principal.getName());
+    public User getCurrentUser(Principal principal) {
+        User user = userService.getUserByName(principal.getName());
         user.setStringRoles(user.getRole());
         return user;
     }
 
     @GetMapping(value = "/adminAll")
-    public List<User> printUsers() {
-        List<User> newList = userDao.listUsers();
+    public List<User> getAllUsers() {
+        List<User> newList = userService.listUsers();
         for (User u : newList) {
             u.setStringRoles(u.getRole());
         }
@@ -36,15 +36,15 @@ public class HelloController {
     }
 
     @GetMapping("/findOne/{id}")
-    public User findOne(@PathVariable("id") Long id) {
-        User user = userDao.findById(id);
+    public User findOneById(@PathVariable("id") Long id) {
+        User user = userService.findById(id);
         return user;
     }
 
     @PutMapping("/update")
-    public ResponseEntity<User> update(@RequestBody User user) {
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
         try {
-        userDao.update(user, user.getId());
+        userService.update(user, user.getId());
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,14 +52,14 @@ public class HelloController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable("id") Long id){
-        userDao.remove(id);
+    public void deleteUser(@PathVariable("id") Long id){
+        userService.remove(id);
     }
 
     @PostMapping("/create")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
-            userDao.add(user);
+            userService.add(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

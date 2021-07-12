@@ -1,6 +1,5 @@
 package ru.jm.CrudSpringBoot.model;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,7 +9,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Data
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {

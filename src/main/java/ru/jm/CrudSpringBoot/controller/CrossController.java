@@ -1,32 +1,30 @@
 package ru.jm.CrudSpringBoot.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
+import ru.jm.CrudSpringBoot.service.UserService;
 
 import java.security.Principal;
 
 @Controller
-public class crossController {
+public class CrossController {
+private final UserService userService;
 
-    private UserDao userDao;
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
+    public CrossController(UserService userService) {
+        this.userService = userService;
     }
 
+
     @GetMapping(value = "/admin")
-    public String printUsers() {
+    public String printAllUsers() {
         return "admin/admin";
     }
 
     @GetMapping(value = "/user")
-    public String printWelcome(ModelMap model, Principal principal) {
-        User user = userDao.getUserByName(principal.getName());
+    public String printCurrentUser(ModelMap model, Principal principal) {
+        User user = userService.getUserByName(principal.getName());
         model.addAttribute("user", user);
         return "admin/user";
     }

@@ -1,11 +1,10 @@
-package ru.jm.CrudSpringBoot.dao;
-
+package ru.jm.CrudSpringBoot.service;
 
 import ru.jm.CrudSpringBoot.model.User;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserService {
     void add(User user);
     void remove(Long id);
     void update(User user,Long id);
@@ -13,7 +12,5 @@ public interface UserDao {
     User findById(Long id);
     User getUserByName(String name);
     User getUserByEmail(String email);
-
-
 
 }
