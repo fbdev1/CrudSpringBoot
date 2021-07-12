@@ -1,19 +1,22 @@
 package ru.jm.CrudSpringBoot.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.jm.CrudSpringBoot.dao.UserDao;
 import ru.jm.CrudSpringBoot.model.User;
 
 import java.util.List;
 
+
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserService userDao;
+    private final UserDao userDao;
 
-    public UserServiceImpl(UserService userDao) {
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
-
-
     @Override
     public void add(User user) {
         userDao.add(user);
