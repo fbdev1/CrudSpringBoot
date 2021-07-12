@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
 
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +43,7 @@ public class User implements UserDetails {
         roles.add(role);
     }
 
-       @Transient
+    @Transient
     private String stringRoles;
 
     public void setStringRoles(String stringRoles) {
@@ -64,6 +65,10 @@ public class User implements UserDetails {
     }
 
     public User() {
+    }
+
+    public String getStringRoles() {
+        return stringRoles;
     }
 
     @Override
